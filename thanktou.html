@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're booked! | Untaught Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+ /* THEME (keep same as main page) */
+:root{
+  --bg:#070B1A; --bg-soft:#0E1430; --bg-line:rgba(255,255,255,0.08);
+  --primary:#FFB224; --primary-2:#FF7A2F; --secondary:#7C5CFF; --success:#2EE59D;
+  --text:#F5F3EE; --text-soft:#B7BCD3; --text-dim:#7E86A8; --on-primary:#1A1203;
+  --grad-primary:linear-gradient(120deg,var(--primary) 0%,var(--primary-2) 100%);
+  --font-head:'Bricolage Grotesque',system-ui,sans-serif;
+  --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+  --radius:18px; --radius-pill:999px; --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text-soft);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none}
+
+.ty{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:24px 16px;overflow:hidden;isolation:isolate}
+.ty__glow{position:absolute;inset:-20%;z-index:-2;background:radial-gradient(circle at 30% 20%,rgba(255,178,36,.18),transparent 45%),radial-gradient(circle at 75% 70%,rgba(124,92,255,.2),transparent 45%)}
+.ty__confetti{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.ty__confetti i{position:absolute;top:-20px;width:8px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.3}}
+
+.ty__box{width:100%;max-width:640px;text-align:center;display:flex;flex-direction:column;align-items:center}
+
+.ty__check svg{width:64px;height:64px}
+.ty__check circle{fill:none;stroke:var(--success);stroke-width:3;stroke-dasharray:160;stroke-dashoffset:160;animation:draw .8s var(--ease) forwards}
+.ty__check path{fill:none;stroke:var(--success);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s var(--ease) .7s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.ty__title{font-family:var(--font-head);font-weight:800;color:var(--text);font-size:clamp(26px,4.6vw,42px);line-height:1.1;letter-spacing:-.02em;margin:12px 0 6px}
+.ty__title .hl{display:block;background:var(--grad-primary);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ty__sub{font-size:15px;margin-bottom:16px}
+
+.ty__video{width:min(100%,calc((100svh - 470px) * 16 / 9));min-width:260px;padding:4px;border-radius:22px;background:linear-gradient(140deg,var(--primary),var(--secondary),var(--primary-2))}
+.ty__frame{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}
+.ty__frame iframe,.ty__frame video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ty__poster{position:absolute;inset:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#000 center/cover}
+.ty__play{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:var(--grad-primary);animation:ring 2s infinite}
+.ty__play svg{width:24px;height:24px;margin-left:4px;fill:var(--on-primary)}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,178,36,.55)}70%{box-shadow:0 0 0 20px rgba(255,178,36,0)}100%{box-shadow:0 0 0 0 rgba(255,178,36,0)}}
+.ty__label{font-size:13px;font-weight:700;color:var(--text);background:rgba(0,0,0,.5);padding:6px 12px;border-radius:var(--radius-pill)}
+
+.ty__steps{width:100%;margin:16px 0;padding:14px 16px;border-radius:var(--radius);background:var(--bg-soft);border:1px solid var(--bg-line);text-align:left}
+.ty__steps-title{font-weight:800;font-size:14.5px;color:var(--text);margin-bottom:8px}
+.ty__steps ol{list-style:none;display:flex;flex-direction:column;gap:7px}
+.ty__steps li{display:flex;align-items:center;gap:10px;font-size:14px}
+.ty__steps li span{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--on-primary);background:var(--grad-primary)}
+
+.ty__btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:420px;padding:16px 24px;border-radius:var(--radius-pill);font-weight:800;font-size:16px;color:var(--on-primary);background:var(--grad-primary);box-shadow:0 14px 40px -10px rgba(255,122,47,.7);transition:transform .3s var(--ease)}
+.ty__btn:hover{transform:translateY(-3px)}
+.ty__btn svg{width:18px;height:18px}
+.ty__note{margin-top:8px;font-size:12.5px;color:var(--text-dim)}
+
+@media (max-width:600px){
+  .ty__check svg{width:52px;height:52px}
+  .ty__sub{font-size:13.5px;margin-bottom:12px}
+  .ty__video{width:100%}
+  .ty__steps{margin:12px 0;padding:12px}
+  .ty__steps li{font-size:13px}
+  .ty__btn{font-size:15px;padding:14px 18px}
+}
+</style>
+</head>
+<body>
+
+<section class="ty">
+  <div class="ty__glow"></div>
+  <div class="ty__confetti" id="tyConfetti"></div>
+
+  <div class="ty__box">
+    <div class="ty__check">
+      <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-15"/></svg>
+    </div>
+
+    <h1 class="ty__title">You're in<span id="tyName"></span>! <span class="hl">Your call is booked.</span></h1>
+    <p class="ty__sub">We'll confirm your call on WhatsApp shortly.</p>
+
+    <div class="ty__video">
+      <div class="ty__frame" id="tyFrame">
+        <div class="ty__poster" id="tyPoster" role="button" tabindex="0">
+          <span class="ty__play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="ty__label">▶ Watch this 2-minute video before your call</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ty__steps">
+      <p class="ty__steps-title">Before your call:</p>
+      <ol>
+        <li><span>1</span>Watch the 2-minute video above.</li>
+        <li><span>2</span>Keep your Instagram page open.</li>
+        <li><span>3</span>Know what you sell and who you sell to.</li>
+      </ol>
+    </div>
+
+    <a href="#" class="ty__btn" id="tyCommunity">
+      Join Our Free Community
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <p class="ty__note">Free content, resources, job posts &amp; event discounts</p>
+  </div>
+</section>
+
+<!-- PASTE THE JS BLOCK HERE -->
+
+<script>
+/* ============ ADMIN SETTINGS ============ */
+const TY_CONFIG = {
+  youtubeId: "",        // 2-minute video YouTube ID
+  mp4Url: "",           // or MP4 link
+  posterImage: "",      // thumbnail (optional)
+  communityLink: "#",   // WhatsApp community / group link
+  metaPixelEvent: ""    // e.g. "Schedule" (leave "" if already fired on form)
+};
+/* ======================================== */
+(function(){
+  // name from form
+  const name = new URLSearchParams(location.search).get('name');
+  if (name) document.getElementById('tyName').textContent = ', ' + name.split(' ')[0];
+
+  document.getElementById('tyCommunity').href = TY_CONFIG.communityLink;
+  if (TY_CONFIG.metaPixelEvent && typeof fbq === 'function') fbq('track', TY_CONFIG.metaPixelEvent);
+
+  // video
+  const poster = document.getElementById('tyPoster'), frame = document.getElementById('tyFrame');
+  if (TY_CONFIG.posterImage) poster.style.backgroundImage = `url('${TY_CONFIG.posterImage}')`;
+  function play(){
+    if (TY_CONFIG.youtubeId) frame.innerHTML = `<iframe src="https://www.youtube.com/embed/${TY_CONFIG.youtubeId}?autoplay=1&rel=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    else if (TY_CONFIG.mp4Url) frame.innerHTML = `<video src="${TY_CONFIG.mp4Url}" autoplay controls playsinline></video>`;
+  }
+  poster.addEventListener('click', play);
+  poster.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); play(); } });
+
+  // confetti
+  const box = document.getElementById('tyConfetti');
+  const colors = ['#FFB224','#FF7A2F','#7C5CFF','#2EE59D','#F5F3EE'];
+  for (let i = 0; i < 70; i++){
+    const c = document.createElement('i');
+    c.style.left = Math.random()*100 + '%';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (2.5 + Math.random()*2.5) + 's';
+    c.style.animationDelay = (Math.random()*0.8) + 's';
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    box.appendChild(c);
+  }
+  setTimeout(()=>box.remove(), 6000);
+})();
+</script>
+
+
+</body>
+</html>
