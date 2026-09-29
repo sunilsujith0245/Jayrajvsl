@@ -969,6 +969,97 @@ My clients ask, "Where are the buyers?" I don't know what to say.</p>
 </div>
 
 
+
+
+     <!-- =========================================================
+     STICKY MOBILE FOOTER
+     ========================================================= -->
+<div class="m-sticky" id="mSticky">
+  <div class="m-sticky__info">
+    <span class="m-sticky__live"></span>
+    <div class="m-sticky__text">
+      <b>1:1 Strategy Call</b>
+      <small><strong>₹199</strong> · 40 min · Few spots left</small>
+    </div>
+  </div>
+  <a href="#book" class="m-sticky__btn">Book Now
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<style>
+#mSticky{display:none}
+@media (max-width:900px){
+  #mSticky{
+    position:fixed !important;left:10px;right:10px;
+    bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    z-index:2147483000;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:8px 8px 8px 14px;border-radius:999px;
+    background:rgba(1,25,31,.95);
+    border:1px solid rgba(47,217,167,.4);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    box-shadow:0 16px 40px -10px rgba(0,0,0,.85);
+    font-family:'Public Sans',system-ui,sans-serif;
+    transform:translateY(160%);opacity:0;visibility:hidden;
+    transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .3s ease,visibility .45s;
+  }
+  #mSticky.is-show{transform:translateY(0);opacity:1;visibility:visible}
+  #mSticky .m-sticky__info{display:flex;align-items:center;gap:10px;min-width:0}
+  #mSticky .m-sticky__live{flex-shrink:0;width:9px;height:9px;border-radius:50%;background:#3BE8B4;animation:mStickyPulse 2s infinite}
+  @keyframes mStickyPulse{0%{box-shadow:0 0 0 0 rgba(59,232,180,.6)}70%{box-shadow:0 0 0 8px rgba(59,232,180,0)}100%{box-shadow:0 0 0 0 rgba(59,232,180,0)}}
+  #mSticky .m-sticky__text{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+  #mSticky .m-sticky__text b{font-size:13.5px;font-weight:800;color:#fff;white-space:nowrap}
+  #mSticky .m-sticky__text small{font-size:11px;color:#A9BFB9;white-space:nowrap}
+  #mSticky .m-sticky__text strong{color:#3BE8B4;font-weight:800}
+  #mSticky .m-sticky__btn{
+    flex-shrink:0;display:inline-flex;align-items:center;gap:6px;
+    padding:12px 18px;border-radius:999px;text-decoration:none;
+    font-weight:800;font-size:14px;color:#01191F;
+    background:linear-gradient(120deg,#3BE8B4 0%,#14B38A 100%);
+    box-shadow:0 8px 22px -8px rgba(47,217,167,.8);
+  }
+  #mSticky .m-sticky__btn svg{width:16px;height:16px}
+  body{padding-bottom:84px}
+  .sticky-cta{display:none !important}
+}
+</style>
+
+<script>
+/* STICKY MOBILE FOOTER — shows after hero, hides at the booking form */
+(function(){
+  var bar = document.getElementById('mSticky');
+  if (!bar) return;
+  if (bar.parentNode !== document.body) document.body.appendChild(bar);
+
+  var hero = document.getElementById('hero');
+  var book = document.getElementById('book');
+
+  function update(){
+    var y = window.scrollY || window.pageYOffset;
+    var vh = window.innerHeight;
+    var heroEnd = hero ? hero.offsetTop + hero.offsetHeight - 80 : 400;
+    var bookTop = book ? book.getBoundingClientRect().top : Infinity;
+    var show = y > heroEnd && bookTop > vh * 0.6;
+    bar.classList.toggle('is-show', show);
+  }
+
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update);
+  update();
+
+  bar.querySelector('a').addEventListener('click', function(e){
+    if (book){ e.preventDefault(); book.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+})();
+</script>
+
+
+
+
+     
+
 <style>
 /* =========================================================
    THEME LAYOUT — dark / lighter-dark sections
