@@ -13,7 +13,7 @@ const CONFIG = {
   // Seconds after play before the CTA button appears (0 = show immediately)
   ctaRevealSeconds: 0,
   // Where the button goes (form section id or booking link)
-  ctaLink: "https://rzp.io/rzp/etI6Mv5""
+  ctaLink: "https://rzp.io/rzp/etI6Mv5"
 };
 
 /* =========================================================
