@@ -774,15 +774,18 @@ My clients ask, "Where are the buyers?" I don't know what to say.</p>
   <div class="container">
     <div class="coach__wrap">
 
-      <!-- PHOTO  (put image link in src; leave "" to show initial) -->
-      <div class="coach__photos coach__photos--single reveal">
-        <figure class="coach__card coach__card--solo">
-          <div class="coach__photo" data-initials="J"><img src="" alt="Jayarajh"></div>
-          <figcaption><b>Jayarajh</b><small>Founder · Content &amp; Lead Generation Coach</small></figcaption>
-        </figure>
-        <span class="coach__float coach__float--1">🎥 Real, practical lessons</span>
-        <span class="coach__float coach__float--2">🤝 Personal guidance</span>
-      </div>
+     <!-- PHOTO -->
+<div class="coach__photos coach__photos--single reveal">
+  <figure class="coach__card coach__card--solo">
+    <div class="coach__photo" data-initials="J">
+      <img src="jairai croped.png" alt="Jayarajh, Founder of Untaught Academy" loading="lazy" width="2000" height="1125">
+    </div>
+    <figcaption><b>Jayarajh</b><small>Founder · Content &amp; Lead Generation Coach</small></figcaption>
+  </figure>
+  <span class="coach__float coach__float--1">🎥 Real, practical lessons</span>
+  <span class="coach__float coach__float--2">🤝 Personal guidance</span>
+</div>
+
 
       <!-- TEXT -->
       <div class="coach__content reveal reveal-d1">
@@ -1056,6 +1059,24 @@ body::after{
 #final .container{position:relative;z-index:1}
 
 
+
+
+
+
+/* coach photo: crop the wide photo to keep his face centred */
+.coach__card--solo .coach__photo img{
+  object-fit:cover;
+  object-position:38% 25%;
+  transition:transform .6s var(--ease);
+}
+.coach__card--solo:hover .coach__photo img{transform:scale(1.04)}
+
+/* soft dark fade at the bottom so the name stands out */
+.coach__card--solo .coach__photo::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:35%;
+  background:linear-gradient(0deg,rgba(1,25,31,.75),transparent);
+  pointer-events:none;
+}
 
 
 </style>
