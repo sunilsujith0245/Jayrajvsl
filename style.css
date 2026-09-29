@@ -271,7 +271,7 @@ a{color:inherit;text-decoration:none}
 @media (max-width:600px){
   :root{--topbar-h:56px;--hero-offset:500px}
   .topbar{font-size:12.5px;padding:8px 12px}
-  .hero{padding:12px 0}
+  .hero{padding:20px 0 28px;min-height:auto;align-items:flex-start}
   .hero__badge{font-size:11.5px;padding:6px 12px}
   .hero__title{font-size:clamp(26px,7.6vw,34px);margin:12px 0 10px}
   .strike,.highlight{white-space:normal}
